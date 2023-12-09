@@ -1,0 +1,36 @@
+user_role = Table(
+    "user_role",
+    Base.metadata,
+    Column("user_id", CHAR(36), ForeignKey("users.id")),
+    Column("role_id", Integer, ForeignKey("roles.id"))
+)
+
+class Role(Base):
+    __tablename__ = "roles"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255), nullable=False)
+
+@app.post("/diseases/", status_code=status.HTTP_201_CREATED)
+async def create_disease(disease:DiseaseCreateRequest, db:db_dependency):
+    db_disease = tables.Disease(**disease.model_dump())
+    db.add(db_disease)
+    db.commit()
+    db.refresh(db_disease)
+    return db_disease
+
+@app.get("/diseases/", status_code=status.HTTP_200_OK)
+async def get_diseases(diseaseName:str, db:db_dependency):
+    query = select(tables.Disease).where(tables.Disease.name.like(f"%{diseaseName}%"))
+    diseases = db.execute(query).scalars().all()
+    if not diseases:
+        raise HTTPException(status_code=404, detail="Analiz bulunamadı")
+    return diseases
+
+@app.get("/users/", status_code=status.HTTP_201_CREATED)
+async def create_user(user:UserCreateRequest, db:db_dependency):
+    db_user = tables.User(**user.model_dump())
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
