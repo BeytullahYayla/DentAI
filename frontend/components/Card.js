@@ -50,12 +50,12 @@ const CardAsset = ({...props}) => {
               onPress={() => navigation.navigate("Detail", {
                 result:result,
                 image:props.image,
-                healthy:props.healthy*100,
-                hypodontia:props.hypodontia*100,
-                calculus:props.calculus*100,
-                gingivitis:props.gingivitis*100,
-                tooth_decay:props.tooth_decay*100,
-                description:"ABC",
+                healthy:props.healthy,
+                hypodontia:props.hypodontia,
+                calculus:props.calculus,
+                gingivitis:props.gingivitis,
+                tooth_decay:props.tooth_decay,
+                description:props.description,
                 createdAt:props.createdAt
               })}
             >

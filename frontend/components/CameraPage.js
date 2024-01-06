@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import * as MediaLibrary from 'expo-media-library';
 import { Permissions  } from "expo-media-library";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 export default function CameraPage() {
   const [type, setType] = useState(CameraType.back);
@@ -11,6 +12,52 @@ export default function CameraPage() {
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState()
   const cameraRef = useRef(null);
   const navigation = useNavigation();
+
+
+
+  const ImageToFormData = (uri) => {
+    const form = new FormData();
+    form.append("file", {
+      name: uri,
+      uri: uri,
+      type: "image/jpg"
+    })
+    return form
+  }
+
+  const detectImage = (uri) => {
+    const formData = ImageToFormData(uri);
+    axios.post(`https://b6b4-149-140-157-40.ngrok-free.app/detect`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set the content type for FormData
+        },
+      }
+    ).then((res) => {
+      console.log(res.data)
+      if (res.status === 200) {
+        navigation.navigate('Entry', { image: uri })
+      }
+    }).catch((err) => {
+      if (err.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(err.response.data); // The response data
+        console.log(err.response.status); // The status code
+        console.log(err.response.headers); // The headers
+        Alert.alert("Hata", err.response.data.detail);
+      } else if (err.request) {
+        // The request was made but no response was received
+        console.log(err.request);
+        Alert.alert("Hata", "Sunucuyla iletişim hatası oluştu.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', err.message);
+        Alert.alert("Hata", "Beklenmeyen bir hata oluştu.");
+      }
+    });
+  }
 
   useEffect(() => {
     (async () => {
@@ -48,8 +95,8 @@ export default function CameraPage() {
             // Album varsa, var olan albüme ekle
             await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
           }
-
-          navigation.navigate('Entry', { image: photo.uri });
+          detectImage(photo.uri);
+          //navigation.navigate('Entry', { image: photo.uri });
         }
         //const asset = await MediaLibrary.createAssetAsync(photo.uri.toString());
         //MediaLibrary.createAlbumAsync("Expo", asset)

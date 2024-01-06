@@ -12,13 +12,12 @@ const BriefHistory = ({ navigation }) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`https://ceec-176-216-33-223.ngrok-free.app/analyzes/last`, {
+      const response = await axios.get(`https://b6b4-149-140-157-40.ngrok-free.app/analyzes/last`, {
         params: {
           username: username
         },
       });
       setData(Object(response.data));
-      console.log(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -44,6 +43,7 @@ const BriefHistory = ({ navigation }) => {
               calculus={d.calculus}
               gingivitis={d.gingivitis}
               tooth_decay={d.tooth_decay}
+              description={d.description}
               image={d.image}
               createdAt={d.created_at}
             />) 

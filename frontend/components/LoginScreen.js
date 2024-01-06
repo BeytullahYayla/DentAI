@@ -12,23 +12,33 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   const handleLogin = () => {
-    console.log(username);
-    console.log(password);
-
     axios
-      .post(`https://ceec-176-216-33-223.ngrok-free.app/login`, {
+      .post(`https://b6b4-149-140-157-40.ngrok-free.app/login`, {
         username: username,
         password: password,
       })
       .then((res) => {
         if (res.status === 200) {
           navigation.navigate("Home");
-        } else {
-          Alert.alert("Hata", "Kullanıcı adı veya şifre yanlış.");
         }
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(err.response.data); // The response data
+          console.log(err.response.status); // The status code
+          console.log(err.response.headers); // The headers
+          Alert.alert("Hata", err.response.data.detail);
+        } else if (err.request) {
+          // The request was made but no response was received
+          console.log(err.request);
+          Alert.alert("Hata", "Sunucuyla iletişim hatası oluştu.");
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', err.message);
+          Alert.alert("Hata", "Beklenmeyen bir hata oluştu.");
+        }
       });
   };
 

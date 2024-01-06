@@ -13,7 +13,7 @@ const HistoryPage = ({navigation}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://ceec-176-216-33-223.ngrok-free.app/analyzes`, {
+        const response = await axios.get(`https://b6b4-149-140-157-40.ngrok-free.app/analyzes`, {
           params: {
             username: username
           },
@@ -43,6 +43,7 @@ const HistoryPage = ({navigation}) => {
               calculus={d.calculus}
               gingivitis={d.gingivitis}
               tooth_decay={d.tooth_decay}
+              description={d.description}
               image={d.image}
               createdAt={d.created_at}
             />) 

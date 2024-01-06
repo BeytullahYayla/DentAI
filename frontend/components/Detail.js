@@ -60,7 +60,7 @@ const Detail = () => {
                 <HorizontalPercentageBar
                   key={index}
                   disease={sortedNames[index]}
-                  percentage={itemValue.toFixed(2)}
+                  percentage={itemValue}
                 />) : null
             ))}
         </Card>

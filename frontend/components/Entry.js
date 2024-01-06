@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import ImageContainer from "./ImageContainer";
 import { Button, Card } from "@rneui/themed";
@@ -14,6 +14,7 @@ const Entry = () => {
   const imageTeeth = route.params ? route.params.image : ""
   const [values, setValues] = useState([])
   const [names, setNames] = useState([])
+  const [description, setDescription] = useState("")
 
   const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -29,7 +30,7 @@ const Entry = () => {
 
   const postAnalyze = () => {
     const formData = ImageToFormData(imageTeeth);
-    axios.post(`https://ceec-176-216-33-223.ngrok-free.app/analyzes?username=${username}`,
+    axios.post(`https://b6b4-149-140-157-40.ngrok-free.app/analyzes?username=${username}`,
       formData,
       {
         headers: {
@@ -39,14 +40,29 @@ const Entry = () => {
     ).then((res) => {
       console.log(res.data)
       if (res.status === 200) {
-        setNames(Object.keys(res.data))
-        setValues(Object.values(res.data))
+        const {description, ...otherData} = res.data;
+        setNames(Object.keys(otherData))
+        setValues(Object.values(otherData))
+        setDescription(description)
         reverseAnalyzed()
-      } else {
-        Alert.alert("Hata", "Beklenmeyen bir hata oluştu.");
       }
     }).catch((err) => {
-      console.log(err + " " + err.response);
+      if (err.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(err.response.data); // The response data
+        console.log(err.response.status); // The status code
+        console.log(err.response.headers); // The headers
+        Alert.alert("Hata", err.response.data.detail);
+      } else if (err.request) {
+        // The request was made but no response was received
+        console.log(err.request);
+        Alert.alert("Hata", "Sunucuyla iletişim hatası oluştu.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', err.message);
+        Alert.alert("Hata", "Beklenmeyen bir hata oluştu.");
+      }
     });
   }
 
@@ -88,6 +104,9 @@ const Entry = () => {
                   percentage={itemValue}
                 />) : null
             ))}
+          </Card>
+          <Card containerStyle={{ borderRadius: 30 }}>
+            <Text style={styles.descText}>{description}</Text>
           </Card>
         </View>
       ) : (
@@ -142,5 +161,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "black",
     fontSize: 20,
+  },
+  descText: {
+    textAlign: "center",
+    color: "black",
+    fontSize: 16,
   },
 });

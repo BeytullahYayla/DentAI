@@ -19,30 +19,45 @@ const RegisterScreen = () => {
   };
 
   const handleRegister = () => {
-    console.log(username);
-    console.log(password);
 
-    axios
-      .post(`https://ceec-176-216-33-223.ngrok-free.app/register`, {
-        first_name: firstname,
-        middle_name: middlename,
-        last_name: lastname,
-        username: username,
-        password: password,
-        gender: gender,
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(res.status);
-        if (res.status === 201) {
-          navigation.goBack();
-        } else {
-          Alert.alert("Hata", "Lütfen gerekli tüm alanları doldurunuz.");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (firstname !== "" && lastname !== "" && username !== "" && password !== "" && gender !== "") {
+      axios
+        .post(`https://b6b4-149-140-157-40.ngrok-free.app/register`, {
+          first_name: firstname,
+          middle_name: middlename,
+          last_name: lastname,
+          username: username,
+          password: password,
+          gender: gender,
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            navigation.goBack();
+          }
+        })
+        .catch((err) => {
+          if (err.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(err.response.data); // The response data
+            console.log(err.response.status); // The status code
+            console.log(err.response.headers); // The headers
+            Alert.alert("Hata", err.response.data.detail);
+          } else if (err.request) {
+            // The request was made but no response was received
+            console.log(err.request);
+            Alert.alert("Hata", "Sunucuyla iletişim hatası oluştu.");
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', err.message);
+            Alert.alert("Hata", "Beklenmeyen bir hata oluştu.");
+          }
+        });
+    } else {
+      Alert.alert("Hata", "Lütfen gerekli tüm alanları doldurunuz.");
+    }
+
+
   };
 
   return (
@@ -96,28 +111,28 @@ const RegisterScreen = () => {
             placeholderTextColor="grey" // Opsiyonel: Placeholder rengini ayarlamak için
             textAlign="center"
           />
-                <View style={styles.genderButtonsContainer}>
-        <TouchableOpacity
-          style={[styles.genderButton, { backgroundColor: gender === "male" ? "#add8e6" : "transparent" }]}
-          onPress={() => handleGenderPress("male")}
-        >
-          <Icon name="mars" type="font-awesome" color={gender === "male" ? "white" : "#4682b4"} />
-        </TouchableOpacity>
+          <View style={styles.genderButtonsContainer}>
+            <TouchableOpacity
+              style={[styles.genderButton, { backgroundColor: gender === "male" ? "#add8e6" : "transparent" }]}
+              onPress={() => handleGenderPress("male")}
+            >
+              <Icon name="mars" type="font-awesome" color={gender === "male" ? "white" : "#4682b4"} />
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[styles.genderButton, { backgroundColor: gender === "female" ? "#ffc0cb" : "transparent" }]}
-          onPress={() => handleGenderPress("female")}
-        >
-          <Icon name="venus" type="font-awesome" color={gender === "female" ? "white" : "#ff69b4"} />
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.genderButton, { backgroundColor: gender === "female" ? "#ffc0cb" : "transparent" }]}
+              onPress={() => handleGenderPress("female")}
+            >
+              <Icon name="venus" type="font-awesome" color={gender === "female" ? "white" : "#ff69b4"} />
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[styles.genderButton, { backgroundColor: gender === "other" ? "#98fb98" : "transparent" }]}
-          onPress={() => handleGenderPress("other")}
-        >
-          <Icon name="venus-mars" type="font-awesome" color={gender === "other" ? "white" : "#008000"} />
-        </TouchableOpacity>
-      </View>
+            <TouchableOpacity
+              style={[styles.genderButton, { backgroundColor: gender === "other" ? "#98fb98" : "transparent" }]}
+              onPress={() => handleGenderPress("other")}
+            >
+              <Icon name="venus-mars" type="font-awesome" color={gender === "other" ? "white" : "#008000"} />
+            </TouchableOpacity>
+          </View>
           <Button
             buttonStyle={{
               height: 60,
