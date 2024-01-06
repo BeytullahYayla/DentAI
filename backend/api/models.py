@@ -71,13 +71,3 @@ class AnalyzeGetResponse(BaseModel):
     hypodontia : float
     created_at : datetime
     description : str
-    
-
-'''class DiseaseCreateRequest(BaseModel):
-    name : str
-    description : Optional[str] = None'''
-
-'''class AnalyzeCreateRequest(BaseModel):
-    user_id : str
-    front_teeth_image : HttpUrl
-    intraoral_image : HttpUrl'''
