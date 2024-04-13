@@ -5,7 +5,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { Permissions  } from "expo-media-library";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-
+import { API_URL } from "./constants";
 export default function CameraPage() {
   const [type, setType] = useState(CameraType.back);
   const [hasPermission, setHasPermission] = useState(null);
@@ -27,7 +27,7 @@ export default function CameraPage() {
 
   const detectImage = (uri) => {
     const formData = ImageToFormData(uri);
-    axios.post(`https://b6b4-149-140-157-40.ngrok-free.app/detect`,
+    axios.post(API_URL+`/detect`,
       formData,
       {
         headers: {

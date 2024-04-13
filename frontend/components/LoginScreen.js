@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Card, Button, Icon } from "@rneui/themed";
 import { useUser } from "./UserContext";
+import { API_URL } from "./constants";
 
 const LoginScreen = () => {
   const {username, setUsername} = useUser();
@@ -13,7 +14,7 @@ const LoginScreen = () => {
 
   const handleLogin = () => {
     axios
-      .post(`https://b6b4-149-140-157-40.ngrok-free.app/login`, {
+      .post(API_URL+`/login`, {
         username: username,
         password: password,
       })

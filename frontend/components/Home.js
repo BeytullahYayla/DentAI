@@ -8,10 +8,9 @@ import {
   SafeAreaView,
   ImageBackground,
 } from "react-native";
-import CardAsset from "./Card";
+
+
 import BriefHistory from "./BriefHistory";
-import CameraButton from "./CameraButton";
-import background from "../assets/background.jpg";
 import NavigateButtons from "./NavigateButtons";
 import { useRoute } from "@react-navigation/native";
 import { useUser } from "./UserContext";

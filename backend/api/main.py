@@ -165,7 +165,8 @@ async def predict_image(file: UploadFile = File(...)):
         If the uploaded file is not in jpg, jpeg, or png format.
     """
 
-    extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
+    print(file.filename)
+    extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png","JPG")
     if not extension:
         return "Image must be jpg or png format!"
     image = read_imagefile(await file.read())
@@ -230,7 +231,8 @@ async def save_analyze(db:db_dependency,username:str, file:UploadFile=File(...))
         If the uploaded file is not in jpg, jpeg, or png format.
     """
     
-    extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
+    print(file.filename)
+    extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png","JPG")
     if not extension:
         return "Image must be jpg or png format!"
     image = read_imagefile(await file.read())

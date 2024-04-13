@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Card, Button, Icon } from "@rneui/themed";
-
+import { API_URL } from "./constants";
 const RegisterScreen = () => {
   const [firstname, setFirstname] = useState("");
   const [middlename, setMiddlename] = useState("");
@@ -22,7 +22,7 @@ const RegisterScreen = () => {
 
     if (firstname !== "" && lastname !== "" && username !== "" && password !== "" && gender !== "") {
       axios
-        .post(`https://b6b4-149-140-157-40.ngrok-free.app/register`, {
+        .post(API_URL+`/register`, {
           first_name: firstname,
           middle_name: middlename,
           last_name: lastname,

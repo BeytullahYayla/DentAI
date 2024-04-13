@@ -6,6 +6,7 @@ import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { useUser } from "./UserContext";
 import HorizontalPercentageBar from "./HorizontalPercentageBar";
+import { API_URL } from "./constants";
 
 const Entry = () => {
   const route = useRoute()
@@ -15,6 +16,8 @@ const Entry = () => {
   const [values, setValues] = useState([])
   const [names, setNames] = useState([])
   const [description, setDescription] = useState("")
+
+
 
   const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -30,7 +33,7 @@ const Entry = () => {
 
   const postAnalyze = () => {
     const formData = ImageToFormData(imageTeeth);
-    axios.post(`https://b6b4-149-140-157-40.ngrok-free.app/analyzes?username=${username}`,
+    axios.post(API_URL+`/analyzes?username=${username}`,
       formData,
       {
         headers: {

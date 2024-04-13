@@ -17,8 +17,8 @@ def load_model_func():
         
     """
     
-    model_path = 'E:\\UNI\\dentai\\backend\\model\\cross_validated_model_last.h5'
-    model = tf.keras.models.load_model(model_path)
+    model_path = 'C://Users//Beytullah//Desktop//Uni Dersleri//Bitirme Tasarım//Modeller//cross_validated_model_xception_last_of_all.h5'
+    model = tf.keras.models.load_model(model_path,compile=False)
     return model
 
 def load_yolo_model(model_path:str):
@@ -48,7 +48,7 @@ def mouth_detection_yolo(image:Image.Image):
     
     """
     
-    model=load_yolo_model("E:\\UNI\\dentai\\backend\\model\\best_last.pt")
+    model=load_yolo_model("C:\\Users\\Beytullah\\Desktop\\Uni Dersleri\\Bitirme Tasarım\\Modeller\\best_last.pt")
     boxes_list=[]
 
     # Run inference on the source
@@ -129,4 +129,5 @@ def read_imagefile(file) -> Image.Image:
         A PIL Image object representing the image.
     """
     image = Image.open(BytesIO(file))
+    print(image)
     return image

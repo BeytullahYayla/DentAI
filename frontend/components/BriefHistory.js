@@ -4,6 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import CardAsset from "./Card";
 import { useUser } from "./UserContext";
 import axios from "axios";
+import { API_URL } from "./constants";
 
 const BriefHistory = ({ navigation }) => {
   const [data, setData] = useState(null);
@@ -12,7 +13,7 @@ const BriefHistory = ({ navigation }) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`https://b6b4-149-140-157-40.ngrok-free.app/analyzes/last`, {
+      const response = await axios.get(API_URL+`/analyzes/last`, {
         params: {
           username: username
         },
