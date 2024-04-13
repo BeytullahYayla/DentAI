@@ -53,6 +53,13 @@ After running to backend server we need to tunnellise localhost:8000 port using 
 ngrok http localhost:8000
 ```
 
+Go inside the constant.js file in frontend/components folder and update API_URL variable using given tunelled api by ngrok server. Example:
+
+```bash
+export const API_URL = 'https://a708-185-252-41-74.ngrok-free.app';
+```
+
+
 Lastly, we're ready to run mobile application
 
 ```bash
