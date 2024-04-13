@@ -1,3 +1,69 @@
+# Dentai
+
+DentAi is a mobile application that aims to provide users with oral health-related information on a mobile device.
+
+## Installation
+
+1. Clone the project:
+
+    ```bash
+    git clone https://github.com/BeytullahYayla/DentAI.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd DenAI
+    ```
+
+3. Create and activate your python conda virtual environment
+
+     ```bash
+    conda create --name your_environment_name python=3.9
+    conda activate your_environment_name
+    ```
+
+4. Install the required dependencies for backend server:
+
+    ```bash
+    cd backend
+    pip install -r requirements.txt
+    ```
+5. Install the required dependencies for mobile client:
+
+    ```bash
+    cd ..
+    cd ..
+    cd frontend
+    npm install
+    ```
+
+## Usage
+
+To run the backend server , first execute the following command:
+
+```bash
+cd backend/api
+uvicorn main:app --reload
+```
+
+After running to backend server we need to tunnellise localhost:8000 port using ngrok server with following command. 
+
+```bash
+ngrok http localhost:8000
+```
+
+Lastly, we're ready to run mobile application
+
+```bash
+cd frontend
+npm start
+```
+
+Scan given QR Code by React-Native expo application and start using our mobile app :)
+
+
+
 ## Project Pipeline
 ![image](https://github.com/BeytullahYayla/DentAI/assets/78471151/4df88dd1-1a9e-499e-ad81-12d04bf549e6)
 
